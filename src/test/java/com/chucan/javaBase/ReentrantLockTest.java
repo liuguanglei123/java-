@@ -2,6 +2,7 @@ package com.chucan.javaBase;
 
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -19,6 +20,7 @@ public class ReentrantLockTest {
 
     private Lock lock = new ReentrantLock(true); //Lock接口实现类对象
 
+    AtomicInteger
     //Lock接口锁，创建两个阻塞队列
     private Condition producer = lock.newCondition();// 生产者线程阻塞队列
     private Condition consumer = lock.newCondition();// 消费者线程阻塞队列
