@@ -58,7 +58,7 @@ notify的另一种使用方法：notifyAll()
 Lock接口的特点：
 * 可以生成Condition接口（实为线程的阻塞队列）
     * 进入队列的线程，释放锁
-    * 出去队列的咸亨，再次获得锁
+    * 出去队列的线程，再次获得锁
     * 接口的方法：await()线程释放锁，然后进入队列
     * 接口的方法：signal()线程出队列，再次获取锁
 > 线程的阻塞队列，依赖lock接口创建，如ReentrantLockTest.java中的
@@ -87,7 +87,7 @@ synchronized是最基础的悲观锁的实现方式，当对某些对象进行�
 只有获取到该锁标记的服务才能使用该资源
 
 ### 乐观锁的实现
-上面提到的Lock接口的锁的实现类ReentrantLock，就是一种乐观锁，也成为CAS(Compare and Swap)/自旋锁
+上面提到的Lock接口的锁的实现类ReentrantLock，就是一种乐观锁，也称为CAS(Compare and Swap)/自旋锁
 
 CAS的原理很简单，包含三个值
 
@@ -100,19 +100,24 @@ CAS操作逻辑如下：
 许多CAS的操作是自旋的：如果操作不成功，会一直重试，直到操作成功为止。
 
 这里引出一个新的问题，既然CAS包含了Compare和Swap两个操作，它又如何保证原子性呢？
+
 答案是：CAS是由CPU支持的原子操作，其原子性是在硬件层面进行保证的。
 
-比如当前线程比较成功后，准备更新共享变量值的时候，发下这个共享变量值被其他线程更改了，那么CAS函数必须返回false。
-
-要实现这个需求，java中提供了Unsafe类，它提供了三个函数，分别用来操作基本类型int和long，以及引用类型Object。
+要实现这个需求，java中提供了Unsafe类，它提供了三个函数，分别用来操作基本类型int和long，以及引用类型Object。如果比较发现值已经被修改了，方法会返回false。
 ![unsafe类](https://github.com/liuguanglei123/java-base/blob/main/images/unsafe.png)
 
+常用的atomic类，比如AtomicInteger AtomicLong，就是使用了上面的方法，来保证一致性的，如图
+![unsafe类](https://github.com/liuguanglei123/java-base/blob/main/images/atomicInteger.png)
+![unsafe类](https://github.com/liuguanglei123/java-base/blob/main/images/atomicInteger2.png)
 
 
+#### CAS的ABA问题
+如果一个线程t1正修改共享变量的值A，但还没修改，此时另一个线程t2获取到CPU时间片，将共享变量的值A修改为B，
+然后又修改为A，此时线程t1检查发现共享变量的值没有发生变化，但是实际上却变化了，尤其是当A为一个复杂对象时，其内部的值可能已经变了。
 
-
-
-
+解决办法：使用版本号方法解决，在变量前面追加上版本号，每次变量更新的时候把版本号加1，那么A－B－A 就会变成1A-2B-3A。从Java1.5开始JUC包里提供了一个类AtomicStampedReference来解决ABA问题。
+AtomicStampedReference类的compareAndSet方法作用是首先检查当前引用是否等于预期引用，并且当前版本号是否等于预期版本号，
+如果全部相等，则以原子方式将该引用和该标志的值设置为给定的更新值。
 
 
 
