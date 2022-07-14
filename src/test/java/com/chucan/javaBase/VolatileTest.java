@@ -11,6 +11,7 @@ public class VolatileTest {
 
     public class Aobing extends Thread{
         private boolean flag = false;
+//        private volatile boolean flag = false;
 
         public boolean isFlag(){
             return this.flag;
@@ -19,7 +20,7 @@ public class VolatileTest {
         @Override
         public void run(){
             try{
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
@@ -34,6 +35,11 @@ public class VolatileTest {
         Aobing a = new Aobing();
         a.start();
         for(;;){
+//            try{
+//                Thread.sleep(300);
+//            }catch (InterruptedException e){
+//                e.printStackTrace();
+//            }
             if(a.flag){
                 System.out.println("testsssssss");
             }
