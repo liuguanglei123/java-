@@ -7,7 +7,7 @@ package com.chucan.javaBase.singleDesignMode;
  */
 public class HungryDemo{
 
-    private static volatile HungryDemo h = new HungryDemo();
+    private static HungryDemo h = new HungryDemo();
 
     private HungryDemo(){
 

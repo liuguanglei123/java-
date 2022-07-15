@@ -7,7 +7,8 @@ package com.chucan.javaBase.singleDesignMode;
  */
 public class LazyDemo {
 
-    private static LazyDemo l;
+    //为什么需要加volatile，因为线程间变量的不可见和指令重排，可能导致两个线程同时访问时小概率产生同一变量访问值不一致
+    private static volatile LazyDemo l;
 
     private LazyDemo(){
 
