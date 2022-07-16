@@ -1,9 +1,7 @@
 # java-
 java基础，你真的了解吗？
 
-
-lock.lock();//获取锁
-    
+## 拓展一下：Callable接口
 基础的几种集合 list set map treeset treemap
 基础的字符串类 string stringbuilder stringbuffer
 复杂一点的数据结构 二叉树 红黑树 B树
@@ -19,7 +17,6 @@ Cumsume Function 等区别
 javaBean
 
 锁 自旋锁
-wait和notify
 hashmap hashtable
 
 properties集合
