@@ -60,3 +60,49 @@ Thread类和Runnable接口使用方法基本类似，都是定以一个新的类
 * FutureTask可以用来包装Callable或者Runnbale对象。因为FutureTask实现了Runnable接口，所以FutureTask也可以被提交给Executor（如上面例子那样）。
 
 ## Callable两种执行方式
+完整的代码查看ThreadTest1.java
+1) 借助FutureTask执行
+
+FutureTask类同时实现了两个接口，Future和Runnable接口，所以它既可以作为Runnable被线程执行，又可以作为Future得到Callable的返回值。
+具体流程：
+
+```
+    //定义实现Callable接口的的实现类重写call方法。
+  public class MyCallableTask implements Callable<Integer>{
+      @Override
+          public Integer call() throws Exception {
+             //TODO 线程执行方法
+          }
+  }
+  ---------------------------------------------------------
+  //创建Callable对象
+  Callable<Integer> mycallabletask = new MyCallableTask();
+  //开始线程
+  FutureTask<Integer> futuretask= new FutureTask<Integer>(mycallabletask);
+  new Thread(futuretask).start();
+  --------------------------------------------------------
+  通过futuretask可以得到MyCallableTask的call()的运行结果：
+  futuretask.get();
+```
+
+2) 借助线程池来运行
+线程池中执行Callable任务原型：
+```
+    public interface ExecutorService extends Executor {
+        //提交一个Callable任务，返回值为一个Future类型
+        <T> Future<T> submit(Callable<T> task);
+
+        //other methods...
+    }
+    //借助线程池来运行Callable任务的一般流程为：
+    ExecutorService exec = Executors.newCachedThreadPool();
+    Future<Integer> future = exec.submit(new MyCallableTask());
+```
+
+## Thread的join方法
+join简介
+
+join方法是Thread类中的一个方法，该方法的定义是等待该线程执行直到终止。
+其实就说join方法将挂起调用线程的执行，直到被调用的对象完成它的执行。
+
+join方法的示例在ThreadJoinTest.java文件中

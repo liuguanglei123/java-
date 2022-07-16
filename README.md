@@ -27,3 +27,5 @@ juc java utils concurrent并发
 脏读幻读不可重复读
 
 什么是servlet
+
+线程状态和线程池状态
