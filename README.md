@@ -29,3 +29,13 @@ juc java utils concurrent并发
 什么是servlet
 
 线程状态和线程池状态
+
+依赖倒置原则
+
+Exception RuntimeException Error 区别
+
+final Map<Long, UserDto> userMap = users.stream().collect(Collectors.toMap(
+                UserDto::getUserId,
+                Function.identity(),
+                (a, b) -> a
+        ));
