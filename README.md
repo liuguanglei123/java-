@@ -1,5 +1,5 @@
-# java-
-java基础，你真的了解吗？
+# java
+时至今日，我都不敢说自己“熟悉”java
 
 ## 拓展一下：Callable接口
 基础的几种集合 list set map treeset treemap
@@ -11,18 +11,12 @@ bigdecimal与interger类
 IO流
 位运算
 运算符重载
-Cumsume Function 等区别
-匿名内部类
 可变数量的形参
 javaBean
 
-锁 自旋锁
 hashmap hashtable
 
 properties集合
-多线程 继承thread runnable callable 如何启动一个新的线程 
-Lock接口 实现类 ReentrantLock
-juc java utils concurrent并发
 
 脏读幻读不可重复读
 
@@ -39,3 +33,7 @@ final Map<Long, UserDto> userMap = users.stream().collect(Collectors.toMap(
                 Function.identity(),
                 (a, b) -> a
         ));
+        
+pom文件中的scope
+
+修改现有的日志，增加一下mybatis的日志输出
